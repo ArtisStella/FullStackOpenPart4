@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import loginService from "../services/login";
 
-const Login = ( { setUser } ) => {
+const Login = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -16,10 +16,10 @@ const Login = ( { setUser } ) => {
       setUsername("");
       setPassword("");
     } catch (exception) {
-        setErrorMessage("Incorrect Username or Password");
-        setTimeout(() => {
-            setErrorMessage(null)
-        }, 5000)
+      setErrorMessage("Incorrect Username or Password");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
     }
   };
 
@@ -44,9 +44,13 @@ const Login = ( { setUser } ) => {
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button className="btn btn-sm btn-primary" type="submit">Login</button>
+        <button className="btn btn-sm btn-primary" type="submit">
+          Login
+        </button>
       </form>
-      {errorMessage ? <p className="mt-2 alert alert-danger">{errorMessage}</p> : null}
+      {errorMessage ? (
+        <p className="mt-2 alert alert-danger">{errorMessage}</p>
+      ) : null}
     </div>
   );
 };

@@ -2,11 +2,16 @@ import { useState, useEffect } from "react";
 import Blog from "./components/Blog";
 import BlogForm from "./components/BlogForm";
 import Login from "./components/Login";
+import Togglable from "./components/Togglable";
 import blogService from "./services/blogs";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState();
+
+  const refreshBlogs = () => {
+    blogService.getAll().then((blogs) => setBlogs(blogs));
+  };
 
   useEffect(() => {
     const user = window.localStorage.getItem("loggedInUser");
@@ -36,10 +41,18 @@ const App = () => {
             Log out
           </button>
         </div>
-        <BlogForm setBlogs={setBlogs} />
-        {blogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
+        <Togglable buttonLabel="Add New">
+          <BlogForm setBlogs={setBlogs} />
+        </Togglable>
+        {blogs
+          .sort((a, b) => b.likes - a.likes)
+          .map((blog) => (
+            <Blog
+              key={blog.id}
+              blog={{ ...blog, user: user }}
+              refreshBlogs={refreshBlogs}
+            />
+          ))}
       </div>
     );
   };

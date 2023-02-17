@@ -19,7 +19,7 @@ const BlogForm = ({ setBlogs }) => {
         setSuccessMessage(null);
       }, 3000);
     } catch (exception) {
-      setErrorMessage("Error!");
+      setErrorMessage("Some error occured!");
       setTimeout(() => {
         setErrorMessage(null);
       }, 3000);
@@ -33,6 +33,7 @@ const BlogForm = ({ setBlogs }) => {
         <div className="mb-2">
           <label className="form-label">Title</label>
           <input
+            required
             className="form-control form-control-sm"
             value={title}
             onChange={({ target }) => setTitle(target.value)}
@@ -41,6 +42,7 @@ const BlogForm = ({ setBlogs }) => {
         <div className="mb-2">
           <label className="form-label">URL</label>
           <input
+            required
             className="form-control form-control-sm"
             value={url}
             onChange={({ target }) => setUrl(target.value)}
