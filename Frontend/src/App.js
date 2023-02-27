@@ -9,8 +9,32 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState();
 
+  const saveBlog = async ( data ) => {
+    await blogService.postBlog(data);
+    refreshBlogs();
+  };
+
   const refreshBlogs = () => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
+  };
+
+  const likeBlog = async (blog, setLikes) => {
+    const updatedBlog = {
+      id: blog.id,
+      title: blog.title,
+      url: blog.url,
+      likes: blog.likes + 1,
+      author: blog.author.id,
+    };
+    blogService.likeBlog(updatedBlog);
+    setLikes(blog.likes + 1);
+  };
+
+  const deleteBlog = async (id) => {
+    if (window.confirm("Are you sure want to delete this blog?")) {
+      await blogService.deleteBlog(id);
+      refreshBlogs();
+    }
   };
 
   useEffect(() => {
@@ -42,7 +66,7 @@ const App = () => {
           </button>
         </div>
         <Togglable buttonLabel="Add New">
-          <BlogForm setBlogs={setBlogs} />
+          <BlogForm saveBlog={saveBlog} />
         </Togglable>
         {blogs
           .sort((a, b) => b.likes - a.likes)
@@ -50,7 +74,8 @@ const App = () => {
             <Blog
               key={blog.id}
               blog={{ ...blog, user: user }}
-              refreshBlogs={refreshBlogs}
+              likeBlog= {likeBlog}
+              deleteBlog={deleteBlog}
             />
           ))}
       </div>

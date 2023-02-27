@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import blogService from "../services/blogs";
 
-const BlogForm = ({ setBlogs }) => {
+const BlogForm = ({ saveBlog }) => {
   const [title, setTitle] = useState();
   const [url, setUrl] = useState();
   const [successMessage, setSuccessMessage] = useState();
   const [errorMessage, setErrorMessage] = useState();
 
-  const saveBlog = async (event) => {
+  const saveBlogHandler = async (event) => {
     event.preventDefault();
     try {
-      await blogService.postBlog({ title, url });
-      setBlogs(await blogService.getAll());
+      await saveBlog({ title, url });
       setTitle("");
       setUrl("");
       setSuccessMessage("Success!");
@@ -29,12 +27,12 @@ const BlogForm = ({ setBlogs }) => {
   return (
     <div className="col-md-3 my-4">
       <h5>Add New</h5>
-      <form onSubmit={saveBlog}>
+      <form onSubmit={saveBlogHandler}>
         <div className="mb-2">
           <label className="form-label">Title</label>
           <input
             required
-            className="form-control form-control-sm"
+            className="form-control form-control-sm titleInput"
             value={title}
             onChange={({ target }) => setTitle(target.value)}
           />
@@ -43,7 +41,7 @@ const BlogForm = ({ setBlogs }) => {
           <label className="form-label">URL</label>
           <input
             required
-            className="form-control form-control-sm"
+            className="form-control form-control-sm urlInput"
             value={url}
             onChange={({ target }) => setUrl(target.value)}
           />

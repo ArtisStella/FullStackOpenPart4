@@ -30,6 +30,10 @@ blogsRouter.post("/", async (request, response) => {
 });
 
 blogsRouter.put("/:id", async (request, response) => {
+  if (!request.user.id) {
+    return response.status(401).json({error: "Invalid token."});
+  }
+  
   const updateBlog = { likes: request.body.likes };
   const updatedBlog = await Blog.findByIdAndUpdate(
     request.params.id,

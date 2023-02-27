@@ -1,30 +1,10 @@
 import React, { useState } from "react";
 import Togglable from "./Togglable";
-import blogService from "../services/blogs";
 import PropTypes from "prop-types";
 
-const Blog = ({ blog, refreshBlogs }) => {
+const Blog = ({ blog, likeBlog, deleteBlog }) => {
   const [likes, setLikes] = useState(blog.likes);
   const blogByUser = blog.author.username === blog.user.username ? true : false;
-
-  const likeBlog = async () => {
-    const updatedBlog = {
-      id: blog.id,
-      title: blog.title,
-      url: blog.url,
-      likes: likes + 1,
-      author: blog.author.id,
-    };
-    blogService.likeBlog(updatedBlog);
-    setLikes(likes + 1);
-  };
-
-  const deleteBlog = async () => {
-    if (window.confirm("Are you sure want to delete this blog?")) {
-      await blogService.deleteBlog(blog.id);
-      refreshBlogs();
-    }
-  };
 
   return (
     <div>
@@ -34,17 +14,29 @@ const Blog = ({ blog, refreshBlogs }) => {
         text={blog.title + " - " + blog.author.name}
       >
         <div className="mb-2">
-          <h5>{blog.title}</h5>
-          <a href={blog.url}>{blog.url}</a>
-          <div>
+          <h5 className="title">{blog.title}</h5>
+          <a className="url" href={blog.url}>
+            {blog.url}
+          </a>
+          <div className="likes">
             <span className="mb-0 me-2">Likes: {likes}</span>
-            <button className="btn btn-primary btn-sm" onClick={likeBlog}>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => {
+                likeBlog({ ...blog, likes: likes }, setLikes);
+              }}
+            >
               Like
             </button>
           </div>
-          <p>{blog.author.name}</p>
+          <p className="author">{blog.author.name}</p>
           {blogByUser ? (
-            <button className="btn btn-danger btn-sm" onClick={deleteBlog}>
+            <button
+              className="btn btn-danger btn-sm"
+              onClick={() => {
+                deleteBlog(blog.id);
+              }}
+            >
               Delete
             </button>
           ) : null}
@@ -56,7 +48,8 @@ const Blog = ({ blog, refreshBlogs }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  refreshBlogs: PropTypes.func.isRequired,
+  likeBlog: PropTypes.func.isRequired,
+  deleteBlog: PropTypes.func.isRequired,
 };
 
 export default Blog;

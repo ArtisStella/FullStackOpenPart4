@@ -20,7 +20,7 @@ module.exports = {
     quotes: ["error", "double"],
     semi: ["error", "always"],
     eqeqeq: "error",
-    "no-trailing-spaces": "error",
+    "no-unused-vars": "warn",
     "object-curly-spacing": ["error", "always"],
     "arrow-spacing": ["error", { before: true, after: true }],
     "no-console": 0,

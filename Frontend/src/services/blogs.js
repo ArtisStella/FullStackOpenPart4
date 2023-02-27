@@ -39,5 +39,4 @@ const deleteBlog = async (blogId) => {
   return response.data;
 };
 
-
 export default { getAll, postBlog, likeBlog, deleteBlog, SetToken };

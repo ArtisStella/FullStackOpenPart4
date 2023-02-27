@@ -17,14 +17,14 @@ const Togglable = forwardRef((props, refs) => {
   return (
     <div className="mb-2">
       <div className="row" style={hideWhenVisible}>
-        {props.text ? <span className="col-sm-3">{props.text}</span> : null}
+        {props.text ? <span className="col-sm-3 collapsedText">{props.text}</span> : null}
         <span className="col-sm-4">
-          <button className="btn btn-primary btn-sm" onClick={toggleVisibility}>
+          <button className="btn btn-primary btn-sm toggleButton" onClick={toggleVisibility}>
             {props.buttonLabel}
           </button>
         </span>
       </div>
-      <div style={showWhenVisible}>
+      <div className="toggleContent" style={showWhenVisible}>
         {props.children}
         {props.closeButtonLabel ? (
           <button
