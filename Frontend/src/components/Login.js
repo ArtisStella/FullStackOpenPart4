@@ -30,6 +30,7 @@ const Login = ({ setUser }) => {
         <div className="mb-2">
           <label className="form-label">Username</label>
           <input
+            id="userInp"
             name="username"
             className="form-control form-control-sm"
             onChange={({ target }) => setUsername(target.value)}
@@ -38,13 +39,14 @@ const Login = ({ setUser }) => {
         <div className="mb-2">
           <label className="form-label">Password</label>
           <input
+            id="passInp"
             type="password"
             name="password"
             className="form-control form-control-sm"
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button className="btn btn-sm btn-primary" type="submit">
+        <button className="btn btn-sm btn-primary loginBtn" type="submit">
           Login
         </button>
       </form>

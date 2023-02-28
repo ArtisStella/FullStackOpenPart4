@@ -7,7 +7,7 @@ const Blog = ({ blog, likeBlog, deleteBlog }) => {
   const blogByUser = blog.author.username === blog.user.username ? true : false;
 
   return (
-    <div>
+    <div className="blog">
       <Togglable
         buttonLabel="View"
         closeButtonLabel="Collapse"
